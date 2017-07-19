@@ -1,0 +1,53 @@
+<html ng-app="app.todos">
+
+<head>
+    <title>Node/AngularJS - Node Todos</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.8.0/css/xeditable.min.css" rel="stylesheet" />
+    <link href="/assets/css/style.css" rel="stylesheet" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.8.0/js/xeditable.min.js"></script>
+
+    <script src="/assets/js/main/app.js"></script>
+    <script src="/assets/js/main/services/svTodos.js"></script>
+</head>
+
+<body ng-controller="todoController">
+    <div class="container">
+
+        <div class="jumbotron text-center">
+            <h1>{{ appName }} <span class="label label-info">{{todos.length}}</span></h1>
+        </div>
+
+        <div class="row" id="todo-list">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="checkbox" ng-repeat="todo in todos">
+                    <input type="checkbox" ng-model="todo.status" ng-click="updateTodo(todo)">
+                    <span onaftersave="updateTodo(todo)" ng-class="{ strike: todo.status }" e-form="textBtnForm" editable-text="todo.text">{{ todo.text }}</span>
+                    <a ng-click="deleteTodo(todo)"><i class="fa fa-remove"></i></a>
+                    <a ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible"><i class="fa fa-edit"></i></a>
+                </div>
+                <p class="text-center" ng-show="loading">
+                    <span><i class="fa fa-spinner fa-spin fa-3x"></i></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="row" id="todo-form">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+                        <input type="text" placeholder="What do you want to do ?" ng-model="formData.text" class="form-control input-lg text-center">
+                    </div>
+                    <button ng-click="createTodo()" ng-disabled="!formData.text" type="submit" class="btn btn-primary btn-lg">Add</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
